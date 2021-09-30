@@ -10,29 +10,31 @@ Purpose:  This project continues developing Project3.
 
  Destructors
         
- 0) move all of your implementations of all functions to OUTSIDE of the class. 
+ 
  
  1) Copy 3 of your user-defined types (the ones with constructors and for()/while() loops from Project 3) here
     Choose the classes that contained nested classes.  Include the nested classes when you copy them over.
 
- 2) add destructors
+ 2) move all of your implementations of all functions to OUTSIDE of the class.
+
+ 3) add destructors
         make the destructors do something like print out the name of the class.
 
- 3) add 2 new UDTs that use only the types you copied above as member variables.
+ 4) add 2 new UDTs that use only the types you copied above as member variables.
 
- 4) add 2 member functions that use your member variables to each of these new UDTs
+ 5) add 2 member functions that use your member variables to each of these new UDTs
 
- 5) Add constructors and destructors to these 2 new types that do stuff.  
+ 6) Add constructors and destructors to these 2 new types that do stuff.  
         maybe print out the name of the class being destructed, or call a member function of one of the members.  be creative
  
- 6) copy over your main() from the end of Project3 
+ 7) copy over your main() from the end of Project3 
         get it to compile with the types you copied over.
         remove any code in main() that uses types you didn't copy over.
  
- 7) Instantiate your 2 UDT's from step 4) in the main() function at the bottom.
+ 8) Instantiate your 2 UDT's from step 4) in the main() function at the bottom.
        call their member functions.
  
- 8) After you finish, click the [run] button.  Clear up any errors or warnings as best you can.
+ 9) After you finish, click the [run] button.  Clear up any errors or warnings as best you can.
  
  */
 
