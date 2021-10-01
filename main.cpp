@@ -164,10 +164,7 @@ bool Gym::turnOffElectricity(bool switchSetting)
 {
     std::cout << "Initalized Value of weight: " << gymMember.weight << std::endl;
     std::cout << "bool Gym::turnOffElectricity(bool) " << switchSetting << std::endl;
-    if (switchSetting == true)
-        switchSetting = false;
-    else
-        switchSetting = true;
+    switchSetting = !switchSetting;
     return switchSetting;
 }
 
@@ -282,12 +279,7 @@ void School::Teacher::teachClass(std::string day, int classDuration)
 
 bool School::Teacher::askForPromotion(double payIncrease)
 {
-    bool getPromotion;
-    if (payIncrease < 15000)
-        getPromotion = true;
-    else
-        getPromotion = false;
-    return getPromotion;
+    return payIncrease < 15000;
 }
 
 void School::Teacher::dismissClass(int minRemaining, bool finishedLecture)
@@ -300,12 +292,7 @@ bool School::hireOrFireTeacher(Teacher teacher)
 {
     std::cout << "Initialized Value of numTeachers: " << numTeachers << std::endl;
     std::cout << "School::hireOrFireTeacher(Teacher) " << teacher.numWorkingYears << std::endl;
-    bool hire;
-    if (teacher.department == "Mathematics")
-        hire = false;
-    else
-        hire = true;
-    return hire;
+    return teacher.department == "Mathematics";
 }
 
 void School::addStudentToClass(Teacher teacher, std::string studentName)
@@ -495,9 +482,7 @@ int Divisions::multiplyTotalNumberUsers(int multipler)
 
 double Divisions::saveCostOfElectricity()
 {
-    double tempCost;
-    
-    tempCost = gym_north.costOfMonthlyElectricity + gym_south.costOfMonthlyElectricity + gym_east.costOfMonthlyElectricity + gym_west.costOfMonthlyElectricity;
+    double tempCost = gym_north.costOfMonthlyElectricity + gym_south.costOfMonthlyElectricity + gym_east.costOfMonthlyElectricity + gym_west.costOfMonthlyElectricity;
 
     std::cout << "Total cost of electricity: $" << tempCost << std::endl;
 
