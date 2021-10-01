@@ -242,8 +242,6 @@ struct School
     // Constructor
     School();
 
-    School(School &);
-
     // Destructor
     ~School();
 
