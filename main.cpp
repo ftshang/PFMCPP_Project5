@@ -99,6 +99,9 @@ struct Gym
         void exercise(std::string machineType, int minutes = 60);
         int findMemberYears(int threshold, int startingValue);
 
+        // using this-> member function
+        void findMemberYearsCopy();
+
         // Constructor
         Member();
 
@@ -114,6 +117,13 @@ struct Gym
     bool turnOffElectricity(bool switchSetting = true);
     // findGymLocation member function
     int findGymLocation(int threshold, int startingValue);
+
+    // using this-> member functions
+    void billMonthlyFeeCopy();
+    void turnOnEquipmentCopy();
+    void turnOffElectricityCopy();
+    void findGymLocationCopy();
+    void displayMemberVariables();
 
     // Constructor
     Gym();
@@ -132,7 +142,7 @@ Gym::Member::Member() : memberName(""), accountBalance(0.0), autoPayEnabled(fals
 
 Gym::Member::~Member()
 {
-    std::cout << "Name of structure: Member" << std::endl;
+    std::cout << "Member object being destroyed." << std::endl;
 }
 
 Gym::Gym() : numTreadmills(0), numDumbells(0), numSquatRacks(0), numUsers(0), costOfMonthlyElectricity(0.0)
@@ -142,7 +152,7 @@ Gym::Gym() : numTreadmills(0), numDumbells(0), numSquatRacks(0), numUsers(0), co
 
 Gym::~Gym()
 {
-    std::cout << "Name of structure: Gym" << std::endl;
+    std::cout << "Gym object being destroyed." << std::endl;
 }
 
 double Gym::Member::getMemberAccountBalance(int accountNumber)
@@ -222,6 +232,50 @@ int Gym::Member::findMemberYears(int threshold, int startingValue)
     return member.birthYear;    
 }
 
+void Gym::Member::findMemberYearsCopy()
+{
+    std::cout << "Calling findMemberYears(int, int)" << std::endl;
+    auto returnValue = this->findMemberYears(10, 0);
+    std::cout << "findMemberYears(int, int) returns: " << returnValue << std::endl;
+}
+
+void Gym::billMonthlyFeeCopy()
+{
+    std::cout << "Calling double Gym::billMonthlyFee(Member, float): " << std::endl; 
+    auto returnValue = this->billMonthlyFee(this->gymMember, .1f);
+    std::cout << "Return Value of double Gym::billMonthlyFee(Member, float): " << returnValue << std::endl;
+}
+
+void Gym::turnOnEquipmentCopy()
+{
+    std::cout << "Calling bool Gym::turnOnEquipment(string, bool) " << std::endl;
+    auto returnValue = this->turnOnEquipment("", false);
+    std::cout << "Return Value of bool Gym::turnOnEquipment(string, bool): " << returnValue << std::endl;
+}
+
+void Gym::turnOffElectricityCopy()
+{
+    std::cout << "Caling bool Gym::turnOffElectricity(bool)" << std::endl;
+    auto returnValue = this->turnOffElectricity(false);
+    std::cout << "Return Value of bool Gym::turnOffElectricity(bool): " << returnValue << std::endl;
+}
+
+void Gym::findGymLocationCopy()
+{
+    std::cout << "Calling int Gym::findGymLocation(int, int)" << std::endl;
+    auto returnValue = this->findGymLocation(10, 1);
+    std::cout << "Return Value of int Gym::findGymLocation(int, int): " << returnValue << std::endl;
+}
+
+void Gym::displayMemberVariables()
+{
+    std::cout << "Value of member variable numTreadmills: " << this->numTreadmills << std::endl;
+    std::cout << "Value of member variable numDumbells: " << this->numDumbells << std::endl;
+    std::cout << "Value of member variable numSquatRacks: " << this->numSquatRacks << std::endl;
+    std::cout << "Value of member variable numUsers: " << this->numUsers << std::endl;
+    std::cout << "Value of member variable costofMonthlyElectricity: " << this->costOfMonthlyElectricity << std::endl;
+}
+
 /*
  copied UDT 2:
  */
@@ -252,6 +306,8 @@ struct School
         void dismissClass(int minRemaining = 0, bool finishedLecture = true);
         // new member function
         int returnTeacher(int threshold, int startingValue);
+        // using this-> for member function
+        void returnTeacherCopy();
 
         // Constructor
         Teacher();
@@ -268,6 +324,13 @@ struct School
     void addCourse(std::string courseName, int gradeLevel = 9);
     // returnSchool member function
     double returnSchool(int threshold, int startingValue);
+
+    // using this-> for member functions
+    void hireOrFireTeacherCopy();
+    void addStudentToClassCopy();
+    void addCourseCopy();
+    void returnSchoolCopy();
+    void displayMemberVariables();
 
     // Constructor
     School();
@@ -286,7 +349,7 @@ School::Teacher::Teacher() : teacherName("None"), numWorkingYears(0), department
 
 School::Teacher::~Teacher()
 {
-    std::cout << "Name of structure: Teacher" << std::endl;
+    std::cout << "Teacher object being destroyed." << std::endl;
 }
 
 School::School()
@@ -296,7 +359,7 @@ School::School()
 
 School::~School()
 {
-    std::cout << "Name of structure: School" << std::endl;
+    std::cout << "School object being destroyed." << std::endl;
 }
 
 void School::Teacher::teachClass(std::string day, int classDuration)
@@ -368,6 +431,48 @@ double School::returnSchool(int threshold, int startingValue)
     return s1.educationFund;
 }
 
+void School::Teacher::returnTeacherCopy()
+{
+    std::cout << "Calling int School::Teacher::returnTeacher(int, int)" << std::endl;
+    auto returnValue = this->returnTeacher(30, 1);
+    std::cout << "Return value of mathTeacher.returnTeacher(int, int): " << returnValue << std::endl;
+}
+
+void School::hireOrFireTeacherCopy()
+{
+    std::cout << "Calling bool School::hireOrFireTeacher(Teacher)" << std::endl;
+    auto returnValue = this->hireOrFireTeacher(this->mathTeacher);
+    std::cout << "Return Value of bool School::hireOrFireTeacher(Teacher): " << returnValue << std::endl;
+}
+
+void School::addStudentToClassCopy()
+{
+    std::cout << "Calling void School::addStudentToClass(Teacher, std::string)" << std::endl;
+    this->addStudentToClass(this->mathTeacher, "Bill");
+}
+
+void School::addCourseCopy()
+{
+    std::cout << "Calling void School::addCourse(std::string, int)" << std::endl;
+    this->addCourse("Biology", 11);
+}
+
+void School::returnSchoolCopy()
+{
+    std::cout << "Calling double School::returnSchool(int, int)" << std::endl;
+    auto returnValue = this->returnSchool(20, 0);
+    std::cout << "Return Value of returnSchool(int, int): " << returnValue << std::endl;
+}
+
+void School::displayMemberVariables()
+{
+    std::cout << "Value of member variable numTeachers: " << this->numTeachers << std::endl;
+    std::cout << "Value of member variable schoolName: " << this->schoolName << std::endl;
+    std::cout << "Value of member variable numStudents: " << this->numStudents << std::endl;
+    std::cout << "Value of member variable numCourses: " << this->numCourses << std::endl;
+    std::cout << "Value of member variable educationFund: " << this->educationFund << std::endl;
+}
+
 /*
  copied UDT 3:
  */
@@ -394,6 +499,13 @@ struct PizzaStore
     // getPizzaStore member function
     double getPizzaStore(int threshold, int startingValue);
 
+    // Using -> for member functions
+    void billCustomerCopy();
+    void addToppingsCopy();
+    void hireOrFireEmployeeCopy();
+    void getPizzaStoreCopy();
+    void displayMemberVariables();
+
     // Constructor
     PizzaStore();
 
@@ -408,7 +520,7 @@ PizzaStore::PizzaStore() : numEmployees(0), storeName("None"), totalMonthlySales
 
 PizzaStore::~PizzaStore()
 {
-    std::cout << "Name of structure: PizzaStore" << std::endl;
+    std::cout << "PizzaStore object being destroyed." << std::endl;
 }
 
 double PizzaStore::billCustomer(std::string pizzaType, int toppings, float discountSale)
@@ -424,7 +536,7 @@ double PizzaStore::billCustomer(std::string pizzaType, int toppings, float disco
 
 int PizzaStore::addToppings(std::string toppingName, bool maxedOutToppings)
 {
-    std::cout << "Initialized Value of numOvens: " << std::endl;
+    std::cout << "Initialized Value of numOvens: " << numOvens << std::endl;
     std::cout << "int PizzaStore::addToppings(std::string, bool) " << toppingName << std:: endl;
     if (maxedOutToppings == false && toppingName != "Pineapple")
         numToppings += 1;
@@ -462,6 +574,43 @@ double PizzaStore::getPizzaStore(int threshold, int startingValue)
     return ps1.totalMonthlySales;
 }
 
+void PizzaStore::billCustomerCopy()
+{
+    std::cout << "Calling double PizzaStore::billCustomer(std::string, int, float)" << std::endl;
+    auto returnedValue = this->billCustomer("Pepperoni", 10, .05f);
+    std::cout << "Return Value of double PizzaStore::billCustomer(std::string, int, float): " << returnedValue << std::endl;
+}
+
+void PizzaStore::addToppingsCopy()
+{
+    std::cout << "Calling int PizzaStore::addToppings(std::string, bool)" << std::endl;
+    auto returnedValue = this->addToppings("Pepperoni", false);
+    std::cout << "Return Value of int PizzaStore::addToppings(std::string, bool): " << returnedValue << std::endl;
+}
+
+void PizzaStore::hireOrFireEmployeeCopy()
+{
+    std::cout << "Calling bool PizzaStore::hireOrFireEmployee(std::string, int)" << std::endl;
+    auto returnedValue = this->hireOrFireEmployee("Bob", 5);
+    std::cout << "Return Value of bool PizzaStore::hireOrFireEmployee(std::string, int): " << returnedValue << std::endl;
+}
+
+void PizzaStore::getPizzaStoreCopy()
+{
+    std::cout<< "Calling double PizzaStore::getPizzaStore(int, int)" << std::endl;
+    auto returnedValue = this->getPizzaStore(50, 3);
+    std::cout << "Return Value of double PizzaStore::getPizzaStore(int, int): " << returnedValue << std::endl;
+}
+
+void PizzaStore::displayMemberVariables()
+{
+    std::cout << "Value of member variable numEmployees: " << this->numEmployees << std::endl;
+    std::cout << "Value of member variable storeName: " << this->storeName << std::endl;
+    std::cout << "Value of member variable totalMonthlySales: " << this->totalMonthlySales << std::endl;
+    std::cout << "Value of member variable numOvens: " << this->numOvens << std::endl;
+    std::cout << "Value of member variables numToppings: " << this->numToppings << std::endl;
+}
+
 /*
  new UDT 4:
  with 2 member functions
@@ -479,12 +628,15 @@ struct Divisions
     int multiplyTotalNumberUsers(int multipler);
     double saveCostOfElectricity();
 
+    // member functions using this->
+    void multiplyTotalNumberUsersCopy();
+    void saveCostOfElectricityCopy();
+
     // Constructor
     Divisions();
 
     // Destructor
     ~Divisions();
-
 };
 
 Divisions::Divisions()
@@ -517,6 +669,20 @@ double Divisions::saveCostOfElectricity()
     return tempCost;
 }
 
+void Divisions::multiplyTotalNumberUsersCopy()
+{
+    std::cout << "Calling int Divisions::multiplyTotalNumberUsers(int)" << std::endl;
+    auto returnedValue = this->multiplyTotalNumberUsers(5);
+    std::cout << "Return Value of int Divisions::multiplyTotalNumberUsers(int): " << returnedValue << std::endl;
+}
+
+void Divisions::saveCostOfElectricityCopy()
+{
+    std::cout << "Calling double saveCostOfElectricity()" << std::endl;
+    auto returnedValue = this->saveCostOfElectricity();
+    std::cout << "Return Value of double Divisions::saveCostofElectricity(): " << returnedValue << std::endl;
+}
+
 /*
  new UDT 5:
  with 2 member functions
@@ -533,6 +699,10 @@ struct District
     int increaseSchoolCourses(int threshold, int startingValue);
     // member function #2
     void teachCourses(int threshold, int startingValue);
+
+    // member functions using this->
+    void increaseSchoolCoursesCopy();
+    void teachCoursesCopy();
 
     // Constructor
     District();
@@ -580,6 +750,19 @@ void District::teachCourses(int startingValue, int endingValue)
     std::cout << "Finished teaching classes for the day." << std::endl;
 }
 
+void District::increaseSchoolCoursesCopy()
+{
+    std::cout << "Calling int District::increaseSchoolCourses(int, int)" << std::endl;
+    auto returnedValue = this->increaseSchoolCourses(50, 0);
+    std::cout << "Return Value of int District::increaseSchoolCourses(int, int): " << returnedValue << std::endl;
+}
+
+void District::teachCoursesCopy()
+{
+    std::cout << "Calling void District::teachCourses(int, int)" << std::endl;
+    this->teachCourses(100, 0);
+}
+
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
 
@@ -617,6 +800,13 @@ int main()
     std::cout << "Value of gym1's member variable numSquatRacks: " << gym1.numSquatRacks << std::endl;
     std::cout << "Value of gym1's member variable numUsers: " << gym1.numUsers << std::endl;
     std::cout << "Value of gym1's member variable costOfMonthlyElectricity: " << gym1.costOfMonthlyElectricity << std::endl;
+    // Calling member functions using this->
+    gym1.findGymLocationCopy();
+    gym1.gymMember.findMemberYearsCopy();
+    gym1.billMonthlyFeeCopy();
+    gym1.turnOnEquipmentCopy();
+    gym1.turnOffElectricityCopy();
+    gym1.displayMemberVariables();
     std::cout << std::endl;
 
     // Instansiating School object
@@ -632,10 +822,17 @@ int main()
     school1.addCourse("Biology", 11);
     // Displaying school1's member variables
     std::cout << "Value of school1's member variable numTeachers: " << school1.numTeachers << std::endl;
-    std::cout << "Value of school1's member variable schoolName: " << school1.schoolName << std::endl;  
+    std::cout << "Value of school1's member variable schoolName: " << school1.schoolName << std::endl;
     std::cout << "Value of school1's member variable numStudents: " << school1.numStudents << std::endl;
     std::cout << "Value of school1's member variable numCourses: " << school1.numCourses << std::endl;
     std::cout << "Value of school1's member variable educationFund: " << school1.educationFund << std::endl;
+    // Calling member functions using this->
+    school1.returnSchoolCopy();
+    school1.mathTeacher.returnTeacherCopy();
+    school1.hireOrFireTeacherCopy();
+    school1.addStudentToClassCopy();
+    school1.addCourseCopy();
+    school1.displayMemberVariables();
     std::cout << std::endl;
 
     // Instanstiating PizzaStore object
@@ -649,13 +846,19 @@ int main()
     int returnedInt = pizza1.addToppings("Pepperoni", false);
     std::cout << "Return Value of int PizzaStore::addToppings(std::string, bool): " << returnedInt << std::endl;
     returnedBool = pizza1.hireOrFireEmployee("Bob", 5);
-    std::cout << "Return Value of bool PizzaSTore:: addToppings(std::string, int): " << returnedBool << std::endl;
+    std::cout << "Return Value of bool PizzaStore::hireOrFireEmployee(std::string, int): " << returnedBool << std::endl;
     // Displaying pizza1's member variables
     std::cout << "Value of pizza1's member variable numEmployees: " << pizza1.numEmployees << std::endl;
     std::cout << "Value of pizza1's member variable storeName: " << pizza1.storeName << std::endl;
     std::cout << "Value of pizza1's member variable totalMonthlySales: " << pizza1.totalMonthlySales << std::endl;
     std::cout << "Value of pizza1's member variable numOvens: " << pizza1.numOvens << std::endl;
     std::cout << "Value of pizza1's member variable numToppings " << pizza1.numToppings << std::endl;
+    // Calling member functions using this->
+    pizza1.getPizzaStoreCopy();
+    pizza1.billCustomerCopy();
+    pizza1.addToppingsCopy();
+    pizza1.hireOrFireEmployeeCopy();
+    pizza1.displayMemberVariables();
     std::cout << std::endl;
 
     // Instantiating Divisions object
@@ -664,6 +867,9 @@ int main()
     std::cout << "Return Value of d1.multiplyTotalNumberUsers: " << returnedInt << std::endl;
     returnedDouble = d1.saveCostOfElectricity();
     std::cout << "Return Value of d1.saveCostOfElectricity(): " << returnedDouble << std::endl;
+    // Calling member functions using this->
+    d1.multiplyTotalNumberUsersCopy();
+    d1.saveCostOfElectricityCopy();
 
     // Instantiating District object
     District schoolDistrict;
@@ -671,6 +877,9 @@ int main()
     std::cout << "Return value of schoolDistrict.increaseSchoolCourses(int, int): " << returnedInt << std::endl;
     std::cout << "Calling schoolDistrict.teachCourses(int, int)" << std::endl;
     schoolDistrict.teachCourses(100, 0);
+    // Calling member functions using this->
+    schoolDistrict.increaseSchoolCoursesCopy();
+    schoolDistrict.teachCoursesCopy();
 
     std::cout << "good to go!" << std::endl;
 }
