@@ -56,7 +56,7 @@ You don't have to do this, you can keep your current object name and just change
 /*
  copied UDT 1:
  */
-
+#include "LeakedObjectDetector.h"
 #include <iostream>
 struct Gym
 {
@@ -92,6 +92,8 @@ struct Gym
 
         // Destructor
         ~Member();
+
+        JUCE_LEAK_DETECTOR(Member)
     };
 
     //bill member with monthly fee
@@ -116,6 +118,8 @@ struct Gym
     ~Gym();
     // Instastiating Member object called gymMember
     Member gymMember;
+
+    JUCE_LEAK_DETECTOR(Gym)
 };
 
 // Member Function Implementations for Gym and Member structures.
@@ -299,6 +303,8 @@ struct School
 
         // Destructor
         ~Teacher();
+
+        JUCE_LEAK_DETECTOR(Teacher)
     };
 
     // hire or fire teacher
@@ -325,6 +331,8 @@ struct School
 
     // Instantiating a Teacher object named mathTeacher
     Teacher mathTeacher; 
+
+    JUCE_LEAK_DETECTOR(School)
 };
 
 School::Teacher::Teacher() : teacherName("None"), numWorkingYears(0), department("None"), gradeLevel(9), teacherEmail("none@pausd.edu")
@@ -496,6 +504,8 @@ struct PizzaStore
 
     // Destructor
     ~PizzaStore();
+
+    JUCE_LEAK_DETECTOR(PizzaStore)
 };
 
 PizzaStore::PizzaStore() : numEmployees(0), storeName("None"), totalMonthlySales(0.00), numOvens(5), numToppings(0)
@@ -622,6 +632,8 @@ struct Divisions
 
     // Destructor
     ~Divisions();
+
+    JUCE_LEAK_DETECTOR(Divisions)
 };
 
 Divisions::Divisions()
@@ -694,6 +706,8 @@ struct District
 
     // Destructor 
     ~District();
+
+    JUCE_LEAK_DETECTOR(District)
 };
 
 District::District()
@@ -748,6 +762,85 @@ void District::teachCoursesCopy()
     this->teachCourses(100, 0);
 }
 
+struct GymWrapper
+{
+    // Constructor
+    GymWrapper( Gym* gymPtr ) : pointerToGym( gymPtr )
+    {}
+
+    // Destructor
+    ~GymWrapper()
+    {
+        delete pointerToGym;
+    }
+
+    // Member variable
+    Gym* pointerToGym = nullptr;
+};
+
+struct SchoolWrapper
+{
+    // Constructor
+    SchoolWrapper( School* schoolPtr ) : pointerToSchool( schoolPtr )
+    {}
+
+    // Destructor
+    ~SchoolWrapper()
+    {
+        delete pointerToSchool;
+    }
+
+    // Member variable
+    School* pointerToSchool = nullptr;
+};
+
+struct PizzaStoreWrapper
+{
+    // Constructor
+    PizzaStoreWrapper( PizzaStore* pizzaPtr ) : pointerToPizzaStore(pizzaPtr)
+    {}
+
+    // Destructor
+    ~PizzaStoreWrapper()
+    {
+        delete pointerToPizzaStore;
+    }
+
+    // Member variable
+    PizzaStore* pointerToPizzaStore = nullptr;
+};
+
+struct DivisionsWrapper
+{
+    // Constructor
+    DivisionsWrapper( Divisions* divPtr ) : pointerToDivisions( divPtr )
+    {}
+
+    // Destructor
+    ~DivisionsWrapper()
+    {
+        delete pointerToDivisions;
+    }
+    // Member variable
+    Divisions* pointerToDivisions = nullptr;
+};
+
+struct DistrictWrapper
+{
+    // Constructor
+    DistrictWrapper( District* districtPtr ) : pointerToDistrict( districtPtr )
+    {}
+
+    // Destructor
+    ~DistrictWrapper()
+    {
+        delete pointerToDistrict;
+    }
+
+    // Member variable
+    District* pointerToDistrict = nullptr;
+};
+
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
 
@@ -765,106 +858,107 @@ void District::teachCoursesCopy()
 #include <iostream>
 int main()
 {
-    Gym gym1;
+    GymWrapper gymWrapper(new Gym());
     double returnedDouble;
     bool returnedBool;
     // Calling each of gym1's member functions and displaying return values
-    auto num = gym1.findGymLocation(10, 1);
-    std::cout << "return value of gym1.findGymLocation(int, int): " << num << std::endl;
-    num = gym1.gymMember.findMemberYears(10, 0);
-    std::cout << "gym1.gymMember.findMemberYears(int, int) returns: " << num << std::endl;
-    returnedDouble = gym1.billMonthlyFee(gym1.gymMember, .1f);
-    std::cout << "Return Value of double Gym::billMonthlyFee(Member, float): " << returnedDouble << std::endl;
-    returnedBool = gym1.turnOnEquipment("", false);
-    std::cout << "Return Value of bool Gym::turnOnEquipment(string, bool): " << returnedBool << std::endl;
-    returnedBool = gym1.turnOffElectricity(false);
-    std::cout << "Return Value of bool Gym::turnOffElectricity(bool): " << returnedBool << std::endl;
-    // Displaying gym1's member vairiable values
-    std::cout << "Value of gym1's member variable numTreadmills: " << gym1.numTreadmills << std::endl;
-    std::cout << "Value of gym1's member variable numDumbells: " << gym1.numDumbells << std::endl;
-    std::cout << "Value of gym1's member variable numSquatRacks: " << gym1.numSquatRacks << std::endl;
-    std::cout << "Value of gym1's member variable numUsers: " << gym1.numUsers << std::endl;
-    std::cout << "Value of gym1's member variable costOfMonthlyElectricity: " << gym1.costOfMonthlyElectricity << std::endl;
-    // Calling member functions using this->
-    gym1.findGymLocationCopy();
-    gym1.gymMember.findMemberYearsCopy();
-    gym1.billMonthlyFeeCopy();
-    gym1.turnOnEquipmentCopy();
-    gym1.turnOffElectricityCopy();
-    gym1.displayMemberVariables();
+    auto num = gymWrapper.pointerToGym->findGymLocation(10, 1);
+    std::cout << "return value of findGymLocation(int, int): " << num << std::endl;
+    // num = gym1.gymMember.findMemberYears(10, 0);
+    num = gymWrapper.pointerToGym->gymMember.findMemberYears(10,0);
+    std::cout << "findMemberYears(int, int) returns: " << num << std::endl;
+    returnedDouble = gymWrapper.pointerToGym->billMonthlyFee(gymWrapper.pointerToGym->gymMember, .1f);
+    std::cout << "Return Value of billMonthlyFee(Member, float): " << returnedDouble << std::endl;
+    returnedBool = gymWrapper.pointerToGym->turnOnEquipment("", false);
+    std::cout << "Return Value of turnOnEquipment(string, bool): " << returnedBool << std::endl;
+    returnedBool = gymWrapper.pointerToGym->turnOffElectricity(false);
+    std::cout << "Return Value of turnOffElectricity(bool): " << returnedBool << std::endl;
+    // // Displaying gym1's member vairiable values
+    std::cout << "Value of member variable numTreadmills: " << gymWrapper.pointerToGym->numTreadmills << std::endl;
+    std::cout << "Value of member variable numDumbells: " << gymWrapper.pointerToGym->numDumbells << std::endl;
+    std::cout << "Value of member variable numSquatRacks: " << gymWrapper.pointerToGym->numSquatRacks << std::endl;
+    std::cout << "Value of member variable numUsers: " << gymWrapper.pointerToGym->numUsers << std::endl;
+    std::cout << "Value of member variable costOfMonthlyElectricity: " << gymWrapper.pointerToGym->costOfMonthlyElectricity << std::endl;
+    // // Calling member functions using this->
+    gymWrapper.pointerToGym->findGymLocationCopy();
+    gymWrapper.pointerToGym->gymMember.findMemberYearsCopy();
+    gymWrapper.pointerToGym->billMonthlyFeeCopy();
+    gymWrapper.pointerToGym->turnOnEquipmentCopy();
+    gymWrapper.pointerToGym->turnOffElectricityCopy();
+    gymWrapper.pointerToGym->displayMemberVariables();
     std::cout << std::endl;
 
-    // Instansiating School object
-    School school1;
-    // Calling each of school1's member functions
-    returnedDouble = school1.returnSchool(20, 0);
-    std::cout << "Return Value of school1.returnSchool(int, int): " << returnedDouble << std::endl;
-    num = school1.mathTeacher.returnTeacher(30, 1);
-    std::cout << "Return Value of school1.mathTeacher.returnTeacher(int, int): " << num << std::endl;
-    returnedBool = school1.hireOrFireTeacher(school1.mathTeacher);
-    std::cout << "Return Value of bool School::hireOrFireTeacher(Teacher): " << returnedBool << std::endl;
-    school1.addStudentToClass(school1.mathTeacher, "Bill");
-    school1.addCourse("Biology", 11);
-    // Displaying school1's member variables
-    std::cout << "Value of school1's member variable numTeachers: " << school1.numTeachers << std::endl;
-    std::cout << "Value of school1's member variable schoolName: " << school1.schoolName << std::endl;
-    std::cout << "Value of school1's member variable numStudents: " << school1.numStudents << std::endl;
-    std::cout << "Value of school1's member variable numCourses: " << school1.numCourses << std::endl;
-    std::cout << "Value of school1's member variable educationFund: " << school1.educationFund << std::endl;
-    // Calling member functions using this->
-    school1.returnSchoolCopy();
-    school1.mathTeacher.returnTeacherCopy();
-    school1.hireOrFireTeacherCopy();
-    school1.addStudentToClassCopy();
-    school1.addCourseCopy();
-    school1.displayMemberVariables();
+    // // Instansiating School object
+    SchoolWrapper schoolWrapper(new School());
+    // // Calling each of school1's member functions
+    returnedDouble = schoolWrapper.pointerToSchool->returnSchool(20, 0);
+    std::cout << "Return Value of returnSchool(int, int): " << returnedDouble << std::endl;
+    num = schoolWrapper.pointerToSchool->mathTeacher.returnTeacher(30, 1);
+    std::cout << "Return Value of mathTeacher.returnTeacher(int, int): " << num << std::endl;
+    returnedBool = schoolWrapper.pointerToSchool->hireOrFireTeacher(schoolWrapper.pointerToSchool->mathTeacher);
+    std::cout << "Return Value of hireOrFireTeacher(Teacher): " << returnedBool << std::endl;
+    schoolWrapper.pointerToSchool->addStudentToClass(schoolWrapper.pointerToSchool->mathTeacher, "Bill");
+    schoolWrapper.pointerToSchool->addCourse("Biology", 11);
+    // // Displaying school1's member variables
+    std::cout << "Value of member variable numTeachers: " << schoolWrapper.pointerToSchool->numTeachers << std::endl;
+    std::cout << "Value of member variable schoolName: " << schoolWrapper.pointerToSchool->schoolName << std::endl;
+    std::cout << "Value of member variable numStudents: " << schoolWrapper.pointerToSchool->numStudents << std::endl;
+    std::cout << "Value of member variable numCourses: " << schoolWrapper.pointerToSchool->numCourses << std::endl;
+    std::cout << "Value of member variable educationFund: " << schoolWrapper.pointerToSchool->educationFund << std::endl;
+    // // Calling member functions using this->
+    schoolWrapper.pointerToSchool->returnSchoolCopy();
+    schoolWrapper.pointerToSchool->mathTeacher.returnTeacherCopy();
+    schoolWrapper.pointerToSchool->hireOrFireTeacherCopy();
+    schoolWrapper.pointerToSchool->addStudentToClassCopy();
+    schoolWrapper.pointerToSchool->addCourseCopy();
+    schoolWrapper.pointerToSchool->displayMemberVariables();
     std::cout << std::endl;
 
-    // Instanstiating PizzaStore object
-    PizzaStore pizza1;
+    // // Instanstiating PizzaStore object
+    PizzaStoreWrapper pizzaStoreWrapper(new PizzaStore());
 
-    // Calling each of pizza1's member functions
-    returnedDouble = pizza1.getPizzaStore(50, 3);
-    std::cout << "Return Value of pizza1.getPizzaStore(int, int): " << returnedDouble << std::endl;
-    returnedDouble = pizza1.billCustomer("Pepperoni", 10, .05f);
-    std::cout << "Return Value of double PizzaStore::billCustomer(std::string, int, float): " << returnedDouble << std::endl;
-    int returnedInt = pizza1.addToppings("Pepperoni", false);
-    std::cout << "Return Value of int PizzaStore::addToppings(std::string, bool): " << returnedInt << std::endl;
-    returnedBool = pizza1.hireOrFireEmployee("Bob", 5);
-    std::cout << "Return Value of bool PizzaStore::hireOrFireEmployee(std::string, int): " << returnedBool << std::endl;
-    // Displaying pizza1's member variables
-    std::cout << "Value of pizza1's member variable numEmployees: " << pizza1.numEmployees << std::endl;
-    std::cout << "Value of pizza1's member variable storeName: " << pizza1.storeName << std::endl;
-    std::cout << "Value of pizza1's member variable totalMonthlySales: " << pizza1.totalMonthlySales << std::endl;
-    std::cout << "Value of pizza1's member variable numOvens: " << pizza1.numOvens << std::endl;
-    std::cout << "Value of pizza1's member variable numToppings " << pizza1.numToppings << std::endl;
-    // Calling member functions using this->
-    pizza1.getPizzaStoreCopy();
-    pizza1.billCustomerCopy();
-    pizza1.addToppingsCopy();
-    pizza1.hireOrFireEmployeeCopy();
-    pizza1.displayMemberVariables();
+    // // Calling each of pizza1's member functions
+    returnedDouble = pizzaStoreWrapper.pointerToPizzaStore->getPizzaStore(50, 3);
+    std::cout << "Return Value of getPizzaStore(int, int): " << returnedDouble << std::endl;
+    returnedDouble = pizzaStoreWrapper.pointerToPizzaStore->billCustomer("Pepperoni", 10, .05f);
+    std::cout << "Return Value of billCustomer(std::string, int, float): " << returnedDouble << std::endl;
+    int returnedInt = pizzaStoreWrapper.pointerToPizzaStore->addToppings("Pepperoni", false);
+    std::cout << "Return Value of addToppings(std::string, bool): " << returnedInt << std::endl;
+    returnedBool = pizzaStoreWrapper.pointerToPizzaStore->hireOrFireEmployee("Bob", 5);
+    std::cout << "Return Value of hireOrFireEmployee(std::string, int): " << returnedBool << std::endl;
+    // // Displaying pizza1's member variables
+    std::cout << "Value of member variable numEmployees: " << pizzaStoreWrapper.pointerToPizzaStore->numEmployees << std::endl;
+    std::cout << "Value of member variable storeName: " << pizzaStoreWrapper.pointerToPizzaStore->storeName << std::endl;
+    std::cout << "Value of member variable totalMonthlySales: " << pizzaStoreWrapper.pointerToPizzaStore->totalMonthlySales << std::endl;
+    std::cout << "Value of member variable numOvens: " << pizzaStoreWrapper.pointerToPizzaStore->numOvens << std::endl;
+    std::cout << "Value of member variable numToppings: " << pizzaStoreWrapper.pointerToPizzaStore->numToppings << std::endl;
+    // // Calling member functions using this->
+    pizzaStoreWrapper.pointerToPizzaStore->getPizzaStoreCopy();
+    pizzaStoreWrapper.pointerToPizzaStore->billCustomerCopy();
+    pizzaStoreWrapper.pointerToPizzaStore->addToppingsCopy();
+    pizzaStoreWrapper.pointerToPizzaStore->hireOrFireEmployeeCopy();
+    pizzaStoreWrapper.pointerToPizzaStore->displayMemberVariables();
     std::cout << std::endl;
 
-    // Instantiating Divisions object
-    Divisions d1;
-    returnedInt = d1.multiplyTotalNumberUsers(5);
-    std::cout << "Return Value of d1.multiplyTotalNumberUsers: " << returnedInt << std::endl;
-    returnedDouble = d1.saveCostOfElectricity();
-    std::cout << "Return Value of d1.saveCostOfElectricity(): " << returnedDouble << std::endl;
-    // Calling member functions using this->
-    d1.multiplyTotalNumberUsersCopy();
-    d1.saveCostOfElectricityCopy();
+    // // Instantiating Divisions object
+    DivisionsWrapper divisionsWrapper(new Divisions());
+    returnedInt = divisionsWrapper.pointerToDivisions->multiplyTotalNumberUsers(5);
+    std::cout << "Return Value of multiplyTotalNumberUsers: " << returnedInt << std::endl;
+    returnedDouble = divisionsWrapper.pointerToDivisions->saveCostOfElectricity();
+    std::cout << "Return Value of saveCostOfElectricity(): " << returnedDouble << std::endl;
+    // // Calling member functions using this->
+    divisionsWrapper.pointerToDivisions->multiplyTotalNumberUsersCopy();
+    divisionsWrapper.pointerToDivisions->saveCostOfElectricityCopy();
 
-    // Instantiating District object
-    District schoolDistrict;
-    returnedInt = schoolDistrict.increaseSchoolCourses(50, 0);
-    std::cout << "Return value of schoolDistrict.increaseSchoolCourses(int, int): " << returnedInt << std::endl;
-    std::cout << "Calling schoolDistrict.teachCourses(int, int)" << std::endl;
-    schoolDistrict.teachCourses(100, 0);
-    // Calling member functions using this->
-    schoolDistrict.increaseSchoolCoursesCopy();
-    schoolDistrict.teachCoursesCopy();
+    // // Instantiating District object
+    DistrictWrapper districtWrapper(new District());
+    returnedInt = districtWrapper.pointerToDistrict->increaseSchoolCourses(50, 0);
+    std::cout << "Return value of increaseSchoolCourses(int, int): " << returnedInt << std::endl;
+    std::cout << "Calling teachCourses(int, int)" << std::endl;
+    districtWrapper.pointerToDistrict->teachCourses(100, 0);
+    // // Calling member functions using this->
+    districtWrapper.pointerToDistrict->increaseSchoolCoursesCopy();
+    districtWrapper.pointerToDistrict->teachCoursesCopy();
 
     std::cout << "good to go!" << std::endl;
 }
