@@ -26,7 +26,7 @@ int PizzaStore::addToppings(const std::string toppingName, const bool maxedOutTo
     std::cout << "Initialized Value of numOvens: " << numOvens << std::endl;
     std::cout << "int PizzaStore::addToppings(std::string, bool) " << toppingName << std:: endl;
     if (maxedOutToppings == false && toppingName != "Pineapple")
-        numToppings += 1;
+        ++numToppings;
     return numToppings;
 }
 
@@ -37,12 +37,12 @@ bool PizzaStore::hireOrFireEmployee(const std::string employeeName, const int to
     bool hire;
     if (employeeName != "None" || totalStaffMembers < 25)
     {
-        numEmployees += 1;
+        ++numEmployees;
         hire = true;
     }
     else
     {
-        numEmployees -= 1;
+        --numEmployees;
         hire = false;
     }
     return hire;

@@ -23,7 +23,7 @@ School::~School()
 void School::Teacher::teachClass(const std::string day, int classDuration) const
 {
     while (classDuration > 0 && day != "Weekend")
-        classDuration -= 1;
+        --classDuration;
 }
 
 bool School::Teacher::askForPromotion(const double payIncrease) const
@@ -34,7 +34,7 @@ bool School::Teacher::askForPromotion(const double payIncrease) const
 void School::Teacher::dismissClass(const int minRemaining, const bool finishedLecture)
 {
     if (finishedLecture == true && minRemaining == 0)
-        numWorkingYears += 1;
+        ++numWorkingYears;
 }
 
 bool School::hireOrFireTeacher(const Teacher teacher) const
@@ -49,9 +49,9 @@ void School::addStudentToClass(const Teacher teacher, const std::string studentN
     std::cout << "Initialized Value of gradeLevel: " << mathTeacher.gradeLevel << std::endl;
     std::cout << "School::addStudentToClass(Teacher, std::string) " << numStudents << std::endl;
     if (teacher.numWorkingYears > 10 && studentName != "None")
-        numStudents += 1;
+        ++numStudents;
     else
-        numStudents -= 1;
+        --numStudents;
 }
 
 void School::addCourse(const std::string courseName, const int gradeLevel)
@@ -59,9 +59,9 @@ void School::addCourse(const std::string courseName, const int gradeLevel)
     std::cout << "Initialized Value of teacherEmail: " << mathTeacher.teacherEmail << std::endl;
     std::cout << "School::addCourse(std::string, int) " << courseName << std::endl;
     if (gradeLevel >= 9 && courseName != "None")
-        numCourses += 1;
+        ++numCourses;
     else
-        numCourses -= 1;
+        --numCourses;
 }
 
 int School::Teacher::returnTeacher(const int threshold, const int startingValue) const
@@ -81,7 +81,7 @@ double School::returnSchool(const int threshold, int startingValue) const
     School s1;
     for (int i = startingValue; i < threshold; startingValue+=2)
     {
-        s1.numTeachers += 1;
+        ++s1.numTeachers;
         s1.educationFund += 3.5;
         if (startingValue <= s1.numStudents)
             break;

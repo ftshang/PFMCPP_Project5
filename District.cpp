@@ -3,7 +3,7 @@
 District::District()
 {
     std::cout << "Creating District object. " << std::endl;
-    for (int i = 9; i < 13; i++)
+    for (int i = 9; i < 13; ++i)
     {
         publicSchool.addCourse("Mathematics", i);
         privateSchool.addCourse("C++", i);
@@ -20,17 +20,17 @@ int District::increaseSchoolCourses(const int threshold, int startingValue)
 {
     while (startingValue < threshold)
     {
-        privateSchool.numCourses++;
+        ++privateSchool.numCourses;
         publicSchool.numCourses += 2;
         bothSchools.numCourses += privateSchool.numCourses + publicSchool.numCourses;
-        startingValue++;
+        ++startingValue;
     }
     return bothSchools.numCourses;
 }
 
 void District::teachCourses(const int startingValue, const int endingValue) const
 {
-    for (int i = startingValue; i > endingValue; i--)
+    for (int i = startingValue; i > endingValue; --i)
     {
         publicSchool.mathTeacher.teachClass("Monday", i);
         privateSchool.mathTeacher.teachClass("Monday", i);

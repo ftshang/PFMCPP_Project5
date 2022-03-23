@@ -78,9 +78,9 @@ int Gym::findGymLocation(const int threshold, int startingValue) const
     Gym gym;
     while(startingValue < threshold)
     {
-        gym.numTreadmills += 1;
-        gym.numUsers += 1;
-        startingValue += 1;
+        ++gym.numTreadmills;
+        ++gym.numUsers;
+        ++startingValue;
     }
     return gym.numUsers;
 }
@@ -88,7 +88,7 @@ int Gym::findGymLocation(const int threshold, int startingValue) const
 int Gym::Member::findMemberYears(const int threshold, const int startingValue) const
 {
     Member member;
-    for (int i = startingValue; i < threshold; i++)
+    for (int i = startingValue; i < threshold; ++i)
     {
         member.birthYear += 5;
         if (member.birthYear >= threshold)
